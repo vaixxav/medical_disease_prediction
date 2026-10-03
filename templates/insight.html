@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}MediPredict — Insights{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Dataset Insights</h1>
+        <p class="hero-subtitle">
+            A quick look at the data behind the prediction model &mdash;
+            {{ total_records }} patient records used for training.
+        </p>
+    </div>
+</section>
+
+<section class="container">
+    <div class="card">
+        <h2 class="card-title">Disease Distribution</h2>
+        <div class="bar-list">
+            {% for row in disease_distribution %}
+            <div class="bar-item">
+                <div class="bar-item-label">
+                    <span>{{ row.label }}</span>
+                    <span>{{ row.count }} ({{ row.percent }}%)</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: {{ row.percent }}%;"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="card">
+        <h2 class="card-title">Average Health Metrics by Condition</h2>
+        <div class="table-wrapper">
+            <table class="insight-table">
+                <thead>
+                    <tr>
+                        <th>Condition</th>
+                        <th>Avg Age</th>
+                        <th>Avg BMI</th>
+                        <th>Avg Glucose</th>
+                        <th>Avg Cholesterol</th>
+                        <th>Avg Heart Rate</th>
+                        <th>Avg Blood Pressure</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in condition_averages %}
+                    <tr>
+                        <td>{{ row.label }}</td>
+                        <td>{{ row.age }}</td>
+                        <td>{{ row.bmi }}</td>
+                        <td>{{ row.glucose }}</td>
+                        <td>{{ row.cholesterol }}</td>
+                        <td>{{ row.heart_rate }}</td>
+                        <td>{{ row.blood_pressure }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="stat-grid">
+        <div class="card stat-card">
+            <p class="stat-value">{{ total_records }}</p>
+            <p class="stat-label">Total Records</p>
+        </div>
+        <div class="card stat-card">
+            <p class="stat-value">{{ model_accuracy }}%</p>
+            <p class="stat-label">Test Accuracy</p>
+        </div>
+        <div class="card stat-card">
+            <p class="stat-value">{{ feature_count }}</p>
+            <p class="stat-label">Input Features</p>
+        </div>
+        <div class="card stat-card">
+            <p class="stat-value">5</p>
+            <p class="stat-label">Predictable Conditions</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
